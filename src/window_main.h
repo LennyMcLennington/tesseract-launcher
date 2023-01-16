@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QNetworkAccessManager>
+#include <QProgressDialog>
 
 #include "manifests/version_definition.h"
 
@@ -23,5 +24,8 @@ private:
 
     Tesseract::Launcher::VersionDefinition selectedVersion;
     QNetworkAccessManager qnam;
+    int toDownload = 0;
+    int downloaded = 0;
+    std::unique_ptr<QProgressDialog> progress;
 };
 #endif // WINDOWMAIN_H

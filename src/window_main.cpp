@@ -2,6 +2,7 @@
 #include "ui_window_main.h"
 
 #include <QNetworkReply>
+#include <QMessageBox>
 #include <filesystem>
 
 #include <QDir>
@@ -13,24 +14,39 @@ WindowMain::WindowMain(QWidget *parent): QMainWindow(parent), ui(new Ui::WindowM
     ui->setupUi(this);
     connect(ui->pushButton, &QPushButton::pressed, this, [this] {
         selectedVersion.parseJson(QJsonDocument::fromJson(funny.toLatin1()));
+        // all of this functionality needs to be its own thing for downloading a file in general
+        progress = std::make_unique<QProgressDialog>();
+        toDownload = 0;
+        downloaded = 0;
         for (auto &x : selectedVersion.libraries) {
             QNetworkReply *reply = qnam.get(QNetworkRequest(QUrl(x.url)));
             std::filesystem::path filePath{"./libs"};
             filePath /= x.path.toStdString();
+            ++toDownload;
             std::filesystem::create_directories(filePath.parent_path());
             auto file = std::make_unique<QFile>(filePath);
+            // FIXME: if the file fails to open for writing it should just not start the request in the first place
+            // also it ought to check if the file exists and if so check the size and hash (if they dont match for the existing file it should be overwritten)
+            // also i need to make it check the size & hash after it finishes downloading anyway
+            // also i could change the progress bar to be based on the file sizes instead of the number of files
             file->open(QFile::WriteOnly | QFile::NewOnly);
+            reply->setParent(this);
             if (file->isOpen()) {
                 connect(reply, &QNetworkReply::readyRead, reply, [reply, f = std::move(file)] {
                     qDebug() << "Reading file";
                     f->write(reply->readAll());
                 });
             }
-            connect(reply, &QNetworkReply::finished, reply, [reply] {
+            connect(reply, &QNetworkReply::finished, reply, [this, reply] {
+                ++downloaded;
+                progress->setLabelText(
+                    QString("%1 of %2 files downloaded").arg(downloaded).arg(toDownload));
+                progress->setValue(downloaded);
                 qDebug() << "Done downloading file";
                 reply->deleteLater();
             });
         }
+        progress->setMaximum(toDownload);
     });
 }
 
