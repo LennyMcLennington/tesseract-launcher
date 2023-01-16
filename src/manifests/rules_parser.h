@@ -31,7 +31,7 @@ namespace Tesseract::Launcher {
         const ParserRegistry RULES_PARSERS = createRuleParsers();
         static ParserRegistry createRuleParsers();
     public:
-        RuleSet parseRules(QJsonArray& array);
-        static RuleResults evaluateRules(RuleSet& array);
+        RuleSet parseRules(const QJsonArray& array);
+        static RuleResults evaluateRules(const RuleSet& array);
     };
 }

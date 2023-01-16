@@ -27,7 +27,7 @@ namespace Tesseract::Launcher {
         for(const auto& ref : json) {
             QJsonObject obj = ref.toObject();
             if(json.contains("rules")) {
-                RuleResults rules = rulesParser.parseRules(obj["rules"].toArray());
+                RuleResults rules = rulesParser.evaluateRules(rulesParser.parseRules(obj["rules"].toArray()));
                 if(RULES_DISALLOW(rules)) continue;
             }
             libs.push_back(parseEntry(obj));

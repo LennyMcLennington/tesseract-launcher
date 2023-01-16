@@ -34,7 +34,7 @@ namespace Tesseract::Launcher {
         return parsers;
     }
 
-    RuleSet RulesParser::parseRules(QJsonArray& array) {
+    RuleSet RulesParser::parseRules(const QJsonArray& array) {
         RuleSet set;
         for(const QJsonValueConstRef& ref : array) {
             QJsonObject rule = ref.toObject();
@@ -60,7 +60,7 @@ namespace Tesseract::Launcher {
         return set;
     }
 
-    RuleResults RulesParser::evaluateRules(RuleSet &rules) {
+    RuleResults RulesParser::evaluateRules(const RuleSet &rules) {
         RuleResults actions;
         for(const auto& rule : rules) {
             bool rulesPassed = true;

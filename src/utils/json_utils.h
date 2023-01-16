@@ -8,8 +8,8 @@ namespace Tesseract::Launcher {
 
     class JsonUtils {
     public:
-        static inline std::string jsonString(QJsonObject obj, const QString& key) {
-            return obj[key].toString().toStdString();
+        static inline QString jsonString(QJsonObject obj, const QString& key) {
+            return obj[key].toString();
         }
 
         template<typename T>

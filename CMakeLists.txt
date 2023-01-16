@@ -16,8 +16,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
-find_package(QT NAMES Qt${UI_QT_VERSION} REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt${UI_QT_VERSION} REQUIRED COMPONENTS Widgets Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -29,7 +29,7 @@ set(PROJECT_SOURCES
 
 add_executable(TesseractLauncher ${PROJECT_SOURCES})
 
-target_link_libraries(TesseractLauncher PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(TesseractLauncher PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
 
 set_target_properties(TesseractLauncher PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

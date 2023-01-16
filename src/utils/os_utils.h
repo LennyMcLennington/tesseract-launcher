@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <QString>
 #include <map>
 #include <qsystemdetection.h>
 

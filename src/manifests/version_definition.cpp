@@ -1,5 +1,6 @@
 #include "version_definition.h"
 
+#include "qstringliteral.h"
 #include "utils/os_utils.h"
 #include "utils/json_utils.h"
 #include "rules_parser.h"
@@ -7,9 +8,11 @@
 #include <QJsonObject>
 #include <map>
 
+#include <QStringLiteral>
+
 namespace Tesseract::Launcher {
 
-    std::string CLIArg::serialize() {
+    QString CLIArg::serialize() {
         return "--" + key + (value.has_value() ? " " + value.value() : "");
     }
 
@@ -23,7 +26,7 @@ namespace Tesseract::Launcher {
                 .majorVersion = static_cast<short>(javaObj["majorVersion"].toInt())};
 
         QJsonArray libs = doc.object()["libraries"].toArray();
-        libraries = libraryParser.parseEntries(rulesParser, libs)
+        libraries = libraryParser.parseEntries(rulesParser, libs);
     }
 }
 

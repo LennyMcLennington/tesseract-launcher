@@ -9,15 +9,17 @@ namespace Tesseract::Launcher {
 
     struct LibraryEntry {
         ManifestRule rule;
-        std::string name, path, hash;
+        QString name;
+        QString path;
+        QString hash;
         long fileSize;
-        std::string url;
+        QString url;
     };
 
     struct MainJarEntry {
-        std::string hash;
+        QString hash;
         long fileSize;
-        std::string url;
+        QString url;
     };
 
     class LibraryParser {

@@ -2,6 +2,9 @@
 #define WINDOWMAIN_H
 
 #include <QMainWindow>
+#include <QNetworkAccessManager>
+
+#include "manifests/version_definition.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class WindowMain; }
@@ -17,5 +20,8 @@ public:
 
 private:
     Ui::WindowMain *ui;
+
+    Tesseract::Launcher::VersionDefinition selectedVersion;
+    QNetworkAccessManager qnam;
 };
 #endif // WINDOWMAIN_H

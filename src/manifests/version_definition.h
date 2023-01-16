@@ -18,17 +18,17 @@ namespace Tesseract::Launcher {
     enum ReleaseType { RELEASE, SNAPSHOT, OLD_BETA, OLD_ALPHA };
 
     struct JavaVersion {
-        std::string component;
+        QString component;
         short majorVersion;
     };
 
     class CLIArg {
     private:
-        std::string key;
-        std::optional<std::string> value;
+        QString key;
+        std::optional<QString> value;
     public:
-        explicit CLIArg(std::string key, std::optional<std::string> value = std::nullopt) : key(std::move(key)), value(std::move(value)) { };
-        std::string serialize();
+        explicit CLIArg(QString key, std::optional<QString> value = std::nullopt) : key(std::move(key)), value(std::move(value)) { };
+        QString serialize();
     };
 
     struct StartingArgs {
@@ -42,7 +42,7 @@ namespace Tesseract::Launcher {
         LibraryParser libraryParser;
 
     public:
-        std::string mainClass, version;
+        QString mainClass, version;
         ReleaseType releaseType;
         JavaVersion java;
         StartingArgs args;
@@ -50,6 +50,7 @@ namespace Tesseract::Launcher {
         std::vector<LibraryEntry> libraries;
         QDateTime releaseTime;
 
+        VersionDefinition() = default;
         VersionDefinition(QByteArrayView jsonData);
         void parseJson(const QJsonDocument& doc);
     };
